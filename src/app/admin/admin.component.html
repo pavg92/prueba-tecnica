@@ -1,0 +1,63 @@
+<div class="row mt-3">
+  <div class="row mb-3">
+    <button class="btn btn-success btn-sm" style="width: 150px;" (click)="change(-1)">{{showForm ? 'Cancelar': 'Nuevo Empleado'}}</button>
+  </div>
+  <div class="row d-flex justify-content-center">
+    <div *ngIf="!showForm else formEmp">
+      <div>
+        <table class="table text-center" *ngIf="employees.length > 0 else noEmplo">
+          <thead>
+            <tr>
+              <th scope="col">ID</th>
+              <th scope="col">Nombre</th>
+              <th scope="col">Tipo</th>
+              <th scope="col">Estatus</th>
+              <th scope="col">Aciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let employee of employees; index as i">
+              <td scope="row">{{ employee.id }}</td>
+              <td>{{ employee.name }}</td>
+              <td>{{ employee.type }}</td>
+              <td>{{ employee.active ? 'Activo' : 'Inactivo' }}</td>
+              <td>
+                  <button class="btn btn-info mx-3" (click)="change(i)">Modificar</button>
+                  <button class="btn btn-danger" (click)="deleteEmployee(i)">Borrar</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        
+        <ng-template #noEmplo>
+            <h3>No hay empleados registrados</h3>
+        </ng-template>
+
+      </div>
+    </div>
+    <ng-template #formEmp>
+      <div class="col-6 text-center">
+        <div class="mb-3">
+          <label for="nameEm" class="form-label">Nombre:</label>
+          <input type="text" class="form-control" id="nameEm" [(ngModel)]="dataEmployee.name">
+        </div>
+        <div class="mb-3">
+          <label for="typeE" class="form-label">Tipo:</label>
+          <select name="typeE" id="typeE" class="form-select" [(ngModel)]="dataEmployee.type">
+            <option value="0" selected disabled>Seleccione tipo</option>
+            <option [value]="1">Tipo 1</option>
+            <option [value]="2">Tipo 2</option>
+          </select>
+        </div>
+        <div class="mb-3">
+          <label for="status" class="form-label">Estatus</label>
+          <select name="status" id="status" class="form-select" [(ngModel)]="dataEmployee.active">
+            <option [value]="true">Activo</option>
+            <option [value]="false">Inactivo</option>
+          </select>
+        </div>
+        <button class="btn btn-success m-2" (click)="saveEmployee()">{{ textBtnSave }}</button>
+      </div>
+    </ng-template>
+  </div>
+</div>
